@@ -10,7 +10,8 @@
 
     <ul> 
         @foreach ($tasks as $task)
-            <li>{!! link_to_route('tasks.show',$task->content,['id' => $task->id]) !!} </li>
+            <li>{{ $task->status }} : {!! link_to_route('tasks.show', $task->content, ['id' => $task->id]) !!} </li>
+
         @endforeach
     </ul>
 
