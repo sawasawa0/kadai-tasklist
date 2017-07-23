@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\task;
+
 class TasksController extends Controller
 {
     /**
@@ -16,7 +18,10 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = task::all();
+        return view('tasks.index' , [
+            'tasks' => $tasks,
+            ]);
     }
 
     /**
@@ -48,7 +53,11 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        //
+       $task = task::find($id);
+       
+       return view('tasks.show',[ 
+           'task' => $task, 
+        ]);
     }
 
     /**
