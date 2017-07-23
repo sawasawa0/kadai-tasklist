@@ -10,7 +10,7 @@
 
     <ul> 
         @foreach ($tasks as $task)
-            <li>{{ $task ->content }}</li>
+            <li>{!! link_to_route('tasks.show',$task->content,['id' => $task->id]) !!} </li>
         @endforeach
     </ul>
 
