@@ -27,9 +27,16 @@
             </tbody>
             
         </table>
-    
+
 @endif
 
-{!! link_to_route('tasks.create', '新規タスク', null, ['class' => 'btn btn-primary']) !!}
+    <div class="center jumbotron">
+        <div class="text-center">
+            <h2>TaskList</h2>
+            {!! link_to_route('signup.get', '新規ユーザー登録!', null, ['class' => 'btn btn-lg btn-primary']) !!}
+        </div>
+    </div>
+
+    {!! link_to_route('tasks.create', '新規タスク', null, ['class' => 'btn btn-primary']) !!}
 
 @endsection
