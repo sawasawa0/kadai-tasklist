@@ -15,7 +15,7 @@
                     
                     @if (Auth::check())
                         <li>{!! link_to_route('tasks.create', '新規タスク') !!}</li>
-                        <li><a href="#">タスクリスト</a></li>
+                        <li>{!! link_to_route('tasks.index', 'タスクリスト') !!}</li>
                         <li role="separator" class="divider"></li>
                         <li>{!! link_to_route('logout.get', 'Logout') !!}</li>
                     @else
