@@ -15,7 +15,12 @@
 
 Route::get('/', 'TasksController@index');
 
-Route::resource('tasks', 'TasksController');
+//Route::resource('tasks', 'TasksController');
+
+//ログインしていないユーザーには、タスク機能を見せない
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('tasks', 'TasksController');
+});
 
 // ユーザ登録
 Route::get('signup', 'Auth\AuthController@getRegister')->name('signup.get');

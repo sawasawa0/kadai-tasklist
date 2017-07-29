@@ -18,11 +18,25 @@ class TasksController extends Controller
      */
     public function index()
     {
+        /**
         $tasks = Task::all();
-        
         return view('tasks.index' , [
             'tasks' => $tasks,
             ]);
+        */
+        
+        $data = [];
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $tasks = $user->tasks()->orderBy('id')->paginate(10);
+
+            $data = [
+                'user' => $user,
+                'tasks' => $tasks,
+            ];
+        }
+        return view('tasks.index', $data);
+        
     }
 
     /**
@@ -52,13 +66,22 @@ class TasksController extends Controller
             'status' => 'required|max:10',// 追加 
             'content' => 'required|max:255',
         ]);
-        
+    
+        $request->user()->tasks()->create([
+        'status' => $request->status,
+        'content' => $request->content,
+        ]);   
+    
+    
+    
+    /**        
         $task = new Task;
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
-        
+     */    
         return redirect('/');
+
     }
 
     /**
@@ -70,10 +93,15 @@ class TasksController extends Controller
     public function show($id)
     {
        $task = task::find($id);
-       
-       return view('tasks.show',[ 
-           'task' => $task, 
-        ]);
+       if (\Auth::user()->id === $task -> user_id){
+
+           return view('tasks.show',[ 
+               'task' => $task, 
+            ]);
+       }
+        else{
+            return view('errors.403');
+        }
     }
 
     /**
@@ -86,10 +114,16 @@ class TasksController extends Controller
     {
         $task = Task::find($id);
         
-        return view('tasks.edit' , [
-           'task' => $task, 
-        ]);
+        if (\Auth::user()->id === $task -> user_id){
+            return view('tasks.edit' , [
+                'task' => $task, 
+            ]);
+        }
+        else{
+             return view('errors.403');
+        }
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -122,7 +156,13 @@ class TasksController extends Controller
     public function destroy($id)
     {
         $task = Task::find($id);
-        $task-> delete();
+        
+        if (\Auth::user()->id === $task -> user_id){
+            $task-> delete();
+        }
+        else{
+            return view('errors.403');
+        }
         
         return redirect('/');
     }

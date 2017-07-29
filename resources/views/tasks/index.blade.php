@@ -19,6 +19,7 @@
                 </thead>
                 <tbody>
                 @foreach ($tasks as $task)
+                 <?php $user = $task->user; ?>
                     <tr>
                         <td>{{ $task->id }}</td>
                         <td>{{ $task->status }}</td>
